@@ -3,8 +3,8 @@
 import nodemailer from "nodemailer";
 
 // Replace the email and password values with a string containing your email and password
-const email = "<your-gmail-goes-here>";
-const password = "<your-gmail-password-goes-here>";
+const email = process.env.EMAIL;
+const password = process.env.EMAIL_PASSWORD;
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
