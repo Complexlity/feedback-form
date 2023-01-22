@@ -1,8 +1,36 @@
-// Replace the code in Pages/index.js with this code
+/* Replace the code in Pages/index.js with this code */
 
 import Head from "next/head";
+import { useRef } from "react";
 
 export default function Home() {
+  const usernameRef = useRef("");
+  const subjectRef = useRef("");
+  const emailRef = useRef("");
+  const messageRef = useRef("");
+
+  async function submitForm(e) {
+    e.preventDefault();
+    // Getting the values from their useRef hooks
+    let username, subject, email, message;
+    username = usernameRef.current.value;
+    subject = subjectRef.current.value;
+    email = emailRef.current.value;
+    message = messageRef.current.value;
+    //Some form Validation
+    if (!username || !subject || !email || !message) {
+      alert("Failed: Ensure to fill all form inputs");
+      return;
+    }
+    // Clear the form inputs after submit
+    usernameRef.current.value =
+      subjectRef.current.value =
+      emailRef.current.value =
+      messageRef.current.value =
+        "";
+
+    // Todo: Send the form  values to an api route
+  }
   return (
     <>
       <Head>
@@ -12,13 +40,23 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="form-wrapper">
-        <form action="/">
+        <form action="/" onSubmit={submitForm}>
           <div className="form-inner">
             <h1>Send Me A Message</h1>
-            <input type="text" placeholder="First Name" />
-            <input type="text" placeholder="Last Name" />
-            <input type="email" placeholder="Email" />
-            <textarea placeholder="Message..." rows="10"></textarea>
+            <input type="text" placeholder="Name" required ref={usernameRef} />
+            <input type="email" placeholder="Email" required ref={emailRef} />
+            <input
+              type="text"
+              placeholder="Subject"
+              required
+              ref={subjectRef}
+            />
+            <textarea
+              placeholder="Message..."
+              rows="10"
+              required
+              ref={messageRef}
+            ></textarea>
             <button type="submit" href="/">
               Submit
             </button>
